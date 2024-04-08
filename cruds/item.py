@@ -1,10 +1,6 @@
-from enum import Enum
 from typing import Optional
-from schemas import ItemCreate
+from schemas import ItemCreate,ItemStatus, ItemUpdate
 
-class ItemStatus(Enum):
-    ON_SALE = "ON_SALE"
-    SOLD_OUT = "SOLD_OUT"
 
 class Item:
     def __init__(
@@ -56,15 +52,36 @@ def create(item_create : ItemCreate):
      items.append(new_item)
      return new_item
 
-def update(id: int, item_update:ItemCreate):
-     for item in items:
+# def update(id: int, item_update:ItemUpdate):
+#      for item in items:
+#         if item.id == id:
+#             item.name =item.name if item_update.name is None else item_update.name
+#             item.price ==item.price if item_update.price is None else item_update.price
+#             item.descripton =item.descripton if item_update.description is None else item_update.description
+#             item.status =item.status if item_update.status is None else item_update.status
+#             return item
+#      return None
+
+def update(id: int, item_update: ItemUpdate):
+    """
+    指定されたIDのアイテムを更新します。
+
+    :param id: 更新対象のアイテムID
+    :param item_update: 更新情報を含むItemUpdateオブジェクト
+    :return: 更新されたアイテム、またはNone（IDが見つからなかった場合）
+    """
+    for item in items:
         if item.id == id:
-            item.name =item_update.get("name", item.name)
-            item.price =item_update.get("price", item.price)
-            item.descripton =item_update.get("description", item.descripton)
-            item.status =item_update.get("status", item.status)
+            if item_update.name is not None:
+                item.name = item_update.name
+            if item_update.price is not None:
+                item.price = item_update.price
+            if item_update.description is not None:
+                item.description = item_update.description
+            if item_update.status is not None:
+                item.status = item_update.status
             return item
-     return None
+    return None
 
 def delete(id: int):
      for i in range(len(items)):

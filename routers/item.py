@@ -1,6 +1,9 @@
-from fastapi import APIRouter,Body
+from fastapi import APIRouter
 from cruds import item as item_cruds
-from schemas import ItemCreate
+from schemas import ItemCreate,ItemUpdate
+
+# fastapiよりAPIRouterインポートする
+# prefixを使用して階層決定する 
 
 router = APIRouter(prefix="/items",tags=["Items"])
 
@@ -22,7 +25,7 @@ async def create(item_create: ItemCreate):
     return item_cruds.create(item_create)
 
 @router.put("/{id}")
-async def update(id:int, item_update: ItemCreate):
+async def update(id:int, item_update: ItemUpdate):
     return item_cruds.update(id,item_update)
 
 
