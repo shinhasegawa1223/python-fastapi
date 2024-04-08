@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["descripton", "pydantic", "sqlalchemy", "uvicorn"]
+  "cSpell.words": [
+    "descripton",
+    "pydantic",
+    "sqlalchemy",
+    "starlette",
+    "uvicorn"
+  ]
 }

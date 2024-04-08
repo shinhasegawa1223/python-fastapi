@@ -11,7 +11,7 @@ DB 内にできあるテーブルをクラスとして作成<br>
 
 ## schemas.py
 
-Pydantic スキーマを定義する pydantyc baseModel を継承<br>
+Pydantic スキーマを定義する pydantic baseModel を継承<br>
 リクエストの際のバリデーションに使用する<br>
 
 ## crud.py
@@ -28,4 +28,23 @@ crud 処理を記載
 crud.py へ処理をつなげる　関数や関数の戻り値返却<br>
 各関数の戻り値に対してバリデーションを行う schemas.py で定義したやつ
 
+### サーバーの立ち上げ方
+
+docker
+
+fastapi-study
+
+```bash
+docker compose up -d
+```
+
+DB クライアントツール
+
+> localhost:81
+
 uvicorn sql_app.main:app --host=0.0.0.0 --port=8686 --reload
+
+swagger
+
+> /docs で開ける
+> localhost:8686/docs
