@@ -48,3 +48,34 @@ swagger
 
 > /docs で開ける
 > localhost:8686/docs
+
+```bash
+[ pip or conda ] install sql alchemy
+[ pip or conda ] install alembic psycopg2-binary
+
+
+```
+
+postgresql のアダプター
+psycopg2
+
+```bash
+alembic init 任意の環境名
+alembic init migrations
+
+```
+
+### 実際の DB の情報に合わせる
+
+alembic.ini
+
+```
+sqlalchemy.url = postgresql://fastapiuser:fastapipass@0.0.0.0:5454/fleamarket
+```
+
+migrations/env.py
+
+```
+ alembic revision --autogenerate -m "create table"
+ alembic upgrade head
+```

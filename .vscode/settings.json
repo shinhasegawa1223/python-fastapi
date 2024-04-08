@@ -1,7 +1,15 @@
 {
   "cSpell.words": [
+    "autoflush",
+    "DBAPI",
     "descripton",
+    "fastapiuser",
+    "fleamarket",
+    "onupdate",
+    "poolclass",
+    "psycopg",
     "pydantic",
+    "sessionmaker",
     "sqlalchemy",
     "starlette",
     "uvicorn"

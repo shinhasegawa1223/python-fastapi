@@ -1,7 +1,17 @@
-from fastapi import APIRouter,Path,Query,HTTPException
+
+from typing import Annotated
+from fastapi import APIRouter,Path,Query,HTTPException, Depends
+from sqlalchemy.orm import Session
 from starlette import status
 from cruds import item as item_cruds
 from schemas import ItemCreate,ItemUpdate,ItemResponse
+from database import get_db
+
+
+# DIを作成する
+
+DbDependency = Annotated[Session, Depends(get_db)]
+
 
 # Path はパスパラメータのバリデーションチェックに使う
 # クエリパラメータもほとんど同じ
@@ -10,6 +20,8 @@ from schemas import ItemCreate,ItemUpdate,ItemResponse
 # prefixを使用して階層決定する 
 
 router = APIRouter(prefix="/items",tags=["Items"])
+
+
 
 
 @router.get("",response_model=list[ItemResponse], status_code=status.HTTP_200_OK)
@@ -31,9 +43,13 @@ async def find_by_name(name: str= Query(min_length=2, max_length=20)):
     print(name)
     return item_cruds.find_by_name(name)
 
+
+
 @router.post("", response_model=ItemResponse,status_code=status.HTTP_201_CREATED)
-async def create(item_create: ItemCreate):
-    return item_cruds.create(item_create)
+async def create(db:DbDependency,item_create: ItemCreate):
+    return item_cruds.create(db,item_create)
+
+
 
 @router.put("/{id}", response_model=ItemResponse,status_code=status.HTTP_200_OK)
 async def update(item_update: ItemUpdate,id:int= Path(gt=0) ):
